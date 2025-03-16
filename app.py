@@ -2,6 +2,8 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 import os
+from flask_migrate import Migrate  # Import Flask-Migrate
+
 
 app = Flask(__name__)
 CORS(app)
@@ -11,6 +13,8 @@ app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL", "sqlite:///tas
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)  # Initialize Flask-Migrate
+
 
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
